@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+svg {
+  background: #eee;
+}
+
+.state {
+  fill: #f8f8f8;
+  stroke: #232323;
+  stroke-linejoin: round;
+  z-index: 0;
+}
+
+.state:hover {
+  fill: #eee;
+}
+.rect{z-index: 1;}
+.event {
+  z-index: 2;
+  fill: orangered;
+  fill-opacity: 0.4;
+}
+
+.event:hover {
+  r:6;
+}
+circle#White{fill:blue;}
+circle#Black{fill:red;}
+
+.event.No{fill-opacity: 0.7;}
+.event.Firearm{fill-opacity: 0.1;}
+
+.data-title{
+  fill:#ccc;
+  font-size: 24px;
+}
+
+.overlay {
+  fill: none;
+  pointer-events: all;
+}
+
+</style>
+<script src="//d3js.org/d3.v3.min.js"></script>
+<script src="//d3js.org/topojson.v1.min.js"></script>
+<body>
+<script>
+
+var width = 1500,
+    height = 960;
+
+var projection = d3.geo.albersUsa()
+    .translate([width / 2, height / 2])
+    .scale(1500);
+
+var zoom = d3.behavior.zoom()
+    .scaleExtent([1, 12])
+    .on("zoom", zoomed);
+
+var path = d3.geo.path()
+    .projection(projection);
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+  .append("g");
+
+var g = svg.append("g");
+
+svg.append("rect")
+    .attr("class", "overlay")
+    .attr("width", width)
+    .attr("height", height);
+
+svg
+    .call(zoom)
+    .call(zoom.event);
+
+d3.json("states.json", function(error, UnitedStates) {
+  if (error) throw error;
+
+  var states = UnitedStates.features
+
+  for (var i = 0; i < states.length; i++) {
+  g.append("path")
+      .datum(states[i])
+      .attr('class', function(d) {return 'state ' + d.properties.name; })
+      .attr("d", path);
+  }
+
+  d3.json("event_points.json", function(error, events) {
+    if (error) return console.error(error);
+
+  for (var i = 0; i < events.length; i++) {
+    g.append('circle')
+      .datum(events[i])
+      .attr('id', function(d) {return d['race']; })
+      .attr('class', function(d) {return 'event ' + d['date_index'] + " " + d['armed']; })
+      .attr('r', 4)
+      .attr("transform", function(d) {return "translate(" + projection([d["long"],d["lat"]]) + ")";})
+    .append('title')
+      .text(function(d) {return d['race'] + " " + d['sex'] + ", Armed: " + d['armed']; })
+      .attr('class', 'data-title');
+  }
+
+  });
+
+});
+
+function zoomed() {
+  g.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+}
+
+d3.select(self.frameElement).style("height", height + "px");
+
+</script>
