@@ -27,7 +27,7 @@ for row in data:
 data_dict = {'date':date, 'name':name, 'race':race, 'sex':sex, 'age':age, 'state':state, 'armed':armed}
 
 df = pd.DataFrame.from_dict(data_dict)
-df['race'] = df['race'].replace('Asian/Pacific Islande','Asian').replace('Hispanic/Latino','Hispanic')
+df['race'] = df['race'].replace('Asian/Pacific Islande','Asian').replace('Hispanic/Latino','Hispanic').replace('Native','Native American')
 df_grouped = df.groupby(['armed','race']).count().rename(columns = {'age':'count'})['count']
 df_grouped = df_grouped.unstack(0)
 col_list = list(df_grouped)
@@ -36,4 +36,10 @@ df_grouped['Other_all'] = df_grouped[col_list].sum(axis=1)
 df_grouped = df_grouped.drop(col_list,1).drop(['Other','Unknown','Arab-American'])
 df_race_pop = pd.read_csv('pop_race.csv').set_index('race')[['population','pop_mil']]
 df_all = df_grouped.join(df_race_pop)
+for var in ['Firearm', 'No', 'Other_all']:
+    df_all['per_'+var] = df_all[var]/df_all['pop_mil']
+df_all['total'] = df_all[['per_Firearm','per_No','per_Other_all']].sum(axis=1)
+df_all = df_all[['per_No','per_Firearm','per_Other_all']]
+df_all.columns = ['Unarmed', 'Firearm', 'Other/Unknown']
+df_all.to_csv('chart1.csv')
 print df_all

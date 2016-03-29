@@ -8,6 +8,8 @@ body {
   margin:0px;
 }
 
+div {margin:auto;}
+
 svg.map {
   background: #232323;
 }
@@ -45,12 +47,13 @@ circle#Other{fill:#e18a24;}
 }
 
 div.center{
-  width:1600px;
+  width:1400px;
   border:4px solid #353535;
   text-align: center;
-  margin:auto;
   font-family:'Open Sans';
   color:#f8f8f8;
+  margin-top:25px;
+  margin-bottom:100px;
 }
 
 div.map{border-bottom: 4px solid #353535;margin-bottom:15px;}
@@ -62,6 +65,8 @@ h1, h2{
   padding-bottom:10px;
   background: #353535;
 }
+
+a {color:#aaa;}
 
 div.key{
   width: 550px;
@@ -92,11 +97,27 @@ svg.example{
 h3{margin:0px 0px 5px 0px;text-decoration: underline;}
 
 div.data-info{
-  width:900px;
+  width:700px;
   display:inline-block;
 }
 
 p{text-align: left; text-indent: 2.0em;}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #f8f8f8;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  display: none;
+}
+
+text {fill: #f8f8f8;}
+g.Black{fill: #fff;}
+
+.chart-container p{ width:80%; margin:auto;}
 
 </style>
 <script src="//d3js.org/d3.v3.min.js"></script>
@@ -111,7 +132,7 @@ p{text-align: left; text-indent: 2.0em;}
       <div class='key1'>
         <h3>Victim Race</h3>
         <svg class="example"><circle id="White" r="6" transform="translate(6,6)"></svg><span>&nbsp;&nbsp;=&nbsp;&nbsp;White</span><br />
-        <svg class="example"><circle id="Black" r="6" transform="translate(6,6)"></svg><span>&nbsp;&nbsp;=&nbsp;&nbsp;Black</span><br />
+        <svg class="example"><circle id="Black" r="6" transform="translate(6,6)"></svg><span>&nbsp;&nbsp;=&nbsp;&nbsp;Black&nbsp;</span><br />
         <svg class="example"><circle id="Other" r="6" transform="translate(6,6)"></svg><span>&nbsp;&nbsp;=&nbsp;&nbsp;Other</span>
       </div>
       <div class='key2'>
@@ -129,9 +150,125 @@ p{text-align: left; text-indent: 2.0em;}
         irresponsibility on the part of the police.</p>
       <p>Therefore, the interaction between race and whether the victim was armed seems important to analyze, as police misconduct is clearest when the victim was unarmed.</p>
     </div>
-<script>
+    <div class="chart-container">
+      <h2>Proportional Deaths by Victim Status</h2>
+      <div class="chart1"></div>
+      <p>This chart illustrates that there is in fact a disparity between how differently armed victims have differing outcomes depending on their race. Most shocking is the clear disparity between Blacks and Native
+       Americans and other racial groups. While unarmed, they are more than twice as likely to be killed by police, and nearly twice as likely to be killed regardless.</p> <br />
+      <p>There are certainly arguments to be made regarding whether it is fair to measure these distinctions purely on a racial basis. It is very likely that there are factors such as share of violent crime committed,
+      and socioeconomic factors beneath those. Nonetheless, the fact that there is twice the likelihood of an <b>unarmed</b> person of certain races to be killed over other races is something that is unlikely to be
+      explained away by other factors.</p>
+      <br />
+    </div>
 
-var width = 1600,
+<script>
+/******************CHART********************/
+var margin = {top: 20, right: 20, bottom: 30, left: 40},
+    chartwidth = 1200 - margin.left - margin.right,
+    chartheight = 600 - margin.top - margin.bottom;
+
+var x = d3.scale.ordinal()
+    .rangeRoundBands([0, chartwidth], .15);
+
+var y = d3.scale.linear()
+    .rangeRound([chartheight, 0]);
+
+var color = d3.scale.ordinal()
+    .range(["rgba(255,255,255,0.7)", "rgba(255,255,255,0.4)", "rgba(255,255,255,0.1)"]);
+
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom");
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left")
+    .tickFormat(d3.format(".2s"));
+
+var chartsvg = d3.select("div.chart1").append("svg")
+    .attr("width", chartwidth + margin.left + margin.right)
+    .attr("height", chartheight + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+d3.csv("chart1.csv", function(error, data) {
+  if (error) throw error;
+
+  color.domain(d3.keys(data[0]).filter(function(key) { return key !== "race"; }));
+
+  data.forEach(function(d) {
+    var y0 = 0;
+    d.deaths = color.domain().map(function(name) { return {name: name, y0: y0, y1: y0 += +d[name]}; });
+    d.total = d.deaths[d.deaths.length - 1].y1;
+  });
+
+  data.sort(function(a, b) { return b.total - a.total; });
+
+  x.domain(data.map(function(d) { return d.race; }));
+  y.domain([0, 10]);
+
+  chartsvg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + chartheight + ")")
+      .call(xAxis);
+
+  chartsvg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+    .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("Deaths per Million");
+
+  var state = chartsvg.selectAll(".population")
+      .data(data)
+    .enter().append("g")
+      .attr("class", "g")
+      .attr("transform", function(d) { return "translate(" + x(d.race) + ",0)"; });
+
+  state.selectAll("rect")
+      .data(function(d) { return d.deaths; })
+    .enter().append("rect")
+      .attr("width", x.rangeBand())
+      .attr("y", function(d) { return y(d.y1); })
+      .attr("height", function(d) { return y(d.y0) - y(d.y1); })
+      .style("fill", function(d) { return color(d.name); });
+
+  state.selectAll('text')
+      .data(function(d) {return d.deaths; })
+    .enter().append('text')
+      .attr('x', x.rangeBand()/2)
+      .attr("y", function(d, i) { return y(d.y1) + (y(d.y0) - y(d.y1))/2; })
+      .style('text-anchor', 'middle')
+      .text(function(d) { return (d.y1 - d.y0).toFixed(2); });
+
+  var legend = chartsvg.selectAll(".legend")
+      .data(color.domain().slice().reverse())
+    .enter().append("g")
+      .attr("class", "legend")
+      .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+  legend.append("rect")
+      .attr("x", chartwidth - 18)
+      .attr("width", 18)
+      .attr("height", 18)
+      .style("fill", color);
+
+  legend.append("text")
+      .attr("x", chartwidth - 24)
+      .attr("y", 9)
+      .attr("dy", ".35em")
+      .attr('class', function(d) { return d; })
+      .style("text-anchor", "end")
+      .text(function(d) { return d; });
+
+});
+
+
+/******************MAPPING******************/
+var width = 1400,
     height = 700;
 
 var projection = d3.geo.albersUsa()
@@ -182,7 +319,7 @@ d3.json("states.json", function(error, UnitedStates) {
       .datum(events[i])
       .attr('id', function(d) {return d['race']; })
       .attr('class', function(d) {return 'event ' + d['date_index'] + " " + d['armed']; })
-      .attr('r', 2)
+      .attr('r', 1.5)
       .attr("transform", function(d) {return "translate(" + projection([d["long"],d["lat"]]) + ")";})
     .append('title')
       .text(function(d) {return d['race'] + " " + d['sex'] + ", Armed: " + d['armed']; });
