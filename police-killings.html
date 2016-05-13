@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,800,700,600italic,600,300italic,300,700italic,800italic' rel='stylesheet' type='text/css'>
+<style>
+
+body {
+  background: #232323;
+  margin:0px;
+}
+
+div {margin:auto;}
+
+svg.map {
+  background: #232323;
+}
+
+.state {
+  fill: #f8f8f8;
+  stroke: #232323;
+  stroke-linejoin: round;
+  z-index: 0;
+}
+
+.state:hover {
+  fill: #eee;
+}
+.rect{z-index: 1;}
+.event {
+  z-index: 2;
+  fill: #e18a24;
+  fill-opacity: 0.4;
+}
+
+.event:hover {
+  r:6;
+}
+#White{fill:#4e44d0; color:#4e44d0;}
+#Black{fill:#ab0101; color:#ab0101;}
+#Other{fill:#e18a24; color:#e18a24;}
+
+.event.No{fill-opacity: 0.7;}
+.event.Firearm{fill-opacity: 0.2;}
+
+.overlay {
+  fill: none;
+  pointer-events: all;
+}
+
+div.center{
+  width:1400px;
+  border:4px solid #353535;
+  text-align: center;
+  font-family:'Open Sans';
+  color:#f8f8f8;
+  margin-top:25px;
+  margin-bottom:100px;
+}
+
+div.map{border-bottom: 4px solid #353535;margin-bottom:15px;}
+
+h1, h2{
+  margin-top:0px;
+  margin-bottom:10px;
+  padding-top:5px;
+  padding-bottom:10px;
+  background: #353535;
+}
+
+a {color:#aaa;}
+
+div.key{
+  width: 550px;
+  margin-right: 15px;
+  display:inline-block;
+  vertical-align: top;
+}
+
+div.key1{
+  width:200px;
+  padding:10px;
+  display:inline-block;
+}
+
+div.key2{
+  width:300px;
+  padding:10px;
+  display:inline-block;
+}
+
+svg.example{
+  width:12px;
+  height:12px;
+}
+.low-opacity{opacity:0.2}
+.med-opacity{opacity:0.4}
+.high-opacity{opacity:0.7}
+div.key h3{margin:0px 0px 5px 0px;text-decoration: underline;}
+
+div.data-info{
+  width:700px;
+  display:inline-block;
+}
+
+p{text-align: left; text-indent: 2.0em;}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #f8f8f8;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  display: none;
+}
+
+text {fill: #f8f8f8; font-weight: bold; }
+g.Black{fill: #fff;}
+
+.chart-container p{ width:80%; margin:auto;}
+
+.stats {
+  width:21%;
+  display:inline-block;
+  padding:1%;
+  vertical-align: top;
+}
+.stats h3,h4 {margin-top:0px; font-weight:normal;}
+.stats h4{margin-bottom: 0.75em;}
+
+text.50 {margin-left:-20px;}
+
+</style>
+<script src="//d3js.org/d3.v3.min.js"></script>
+<script src="//d3js.org/topojson.v1.min.js"></script>
+<body>
+  <div class='center'>
+    <h1> Police Killings, 2015 to Present</h1>
+    <div class='map'>
+    </div>
+    <div class='key'>
+      <h2>Key</h2>
+      <div class='key1'>
+        <h3>Victim Race</h3>
+        <svg class="example"><circle id="White" r="6" transform="translate(6,6)"></svg><span>&nbsp;&nbsp;=&nbsp;&nbsp;White</span><br />
+        <svg class="example"><circle id="Black" r="6" transform="translate(6,6)"></svg><span>&nbsp;&nbsp;=&nbsp;&nbsp;Black&nbsp;</span><br />
+        <svg class="example"><circle id="Other" r="6" transform="translate(6,6)"></svg><span>&nbsp;&nbsp;=&nbsp;&nbsp;Other</span>
+      </div>
+      <div class='key2'>
+        <h3>Victim Status</h3>
+        <span class="low-opacity">Low Opacity</span><span>&nbsp;&nbsp;=&nbsp;&nbsp;Armed with Firearm</span><br />
+        <span class="med-opacity">Medium Opacity</span><span>&nbsp;&nbsp;=&nbsp;&nbsp;Other/Unknown</span><br />
+        <span class="high-opacity">High Opacity</span><span>&nbsp;&nbsp;=&nbsp;&nbsp;Unarmed</span>
+      </div>
+    </div>
+    <div class="data-info">
+      <h2>Data Source</h2>
+      <p>The data used in this visualization is from The Guardian's project entitled <a href="http://www.theguardian.com/us-news/ng-interactive/2015/jun/01/the-counted-police-killings-us-database" target="_blank">"The Counted"</a>.
+        It is an ongoing project that tracks deaths resulting from police violence in the US. Their project does a very good job of statistics on a state-wide basis, as well as some interesting statistics based on race.
+        I thought an interesting expansion of this would be to bring in the armed/unarmed element. Many police shootings are what may be called "suicide by police", which doesn't necessarily reflect any malfeasance or
+        irresponsibility on the part of the police.</p>
+      <p>Therefore, the interaction between race and whether the victim was armed seems important to analyze, as police misconduct is clearest when the victim was unarmed.</p>
+    </div>
+    <div class='stats' id='pie1'>
+      <h3 style="font-weight:bold;">Total Killed: <span class="killed"></span></h3>
+      <h4><span style="font-weight:bold;" class='totals' id="White"></span> were <span style="font-weight:bold;">White</span></h4>
+      <h4><span style="font-weight:bold;" class='totals' id="Black"></span> were <span style="font-weight:bold;">Black</span></h4>
+      <h4><span style="font-weight:bold;" class='totals' id="Other"></span> were of <span style="font-weight:bold;">Another Race</span></h4>
+    </div>
+    <div class='stats' id='pie2'>
+      <h3><span style="font-weight:bold;" class="unarmed-total"></span> were <span style="font-weight:bold;">Unarmed</span></h3>
+      <h4><span style="font-weight:bold;" class='unarmed' id="White"></span> were <span style="font-weight:bold;">White</span></h4>
+      <h4><span style="font-weight:bold;" class='unarmed' id="Black"></span> were <span style="font-weight:bold;">Black</span></h4>
+      <h4><span style="font-weight:bold;" class='unarmed' id="Other"></span> were of <span style="font-weight:bold;">Another Race</span></h4>
+    </div>
+    <div class='stats' id='pie3'>
+      <h3><span style="font-weight:bold;" class="armed-total"></span> had a <span style="font-weight:bold;">Firearm</span></h3>
+      <h4><span style="font-weight:bold;" class='armed' id="White"></span> were <span style="font-weight:bold;">White</span></h4>
+      <h4><span style="font-weight:bold;" class='armed' id="Black"></span> were <span style="font-weight:bold;">Black</span></h4>
+      <h4><span style="font-weight:bold;" class='armed' id="Other"></span> were of <span style="font-weight:bold;">Another Race</span></h4>
+    </div>
+    <div class='stats' id='pie4'>
+      <h3><span style="font-weight:bold;">US Demographics</span> show...</h3>
+      <h4><span style="font-weight:bold;" class='demo' id="White"></span> are <span style="font-weight:bold;">White</span></h4>
+      <h4><span style="font-weight:bold;" class='demo' id="Black"></span> are <span style="font-weight:bold;">Black</span></h4>
+      <h4><span style="font-weight:bold;" class='demo' id="Other"></span> are of <span style="font-weight:bold;">Another Race</span></h4>
+    </div>
+    <div class="chart-container">
+      <h2>Proportional Deaths by Victim Status</h2>
+      <div class="chart1"></div>
+      <p>This chart illustrates that there is in fact a disparity between how differently armed victims have differing outcomes depending on their race. Most shocking is the clear disparity between Blacks and Native
+       Americans and other racial groups. While unarmed, they are more than twice as likely to be killed by police, and nearly twice as likely to be killed regardless.</p> <br />
+      <p>There are certainly arguments to be made regarding whether it is fair to measure these distinctions purely on a racial basis. It is very likely that there are factors such as share of violent crime committed,
+      and socioeconomic factors beneath those. Nonetheless, the fact that there is twice the likelihood of an <b>unarmed</b> person of certain races to be killed over other races is something that is unlikely to be
+      explained away by other factors.</p>
+      <br />
+    </div>
+<script src='charts.js'></script>
+  </div>
