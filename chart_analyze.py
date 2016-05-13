@@ -52,7 +52,7 @@ df_totals = df_totals[['race_cat','Total']]
 df_totals = df_totals.groupby(['race_cat']).sum()
 df_totals['All'] = df_totals['Total'].sum()
 df_totals['pct'] = df_totals['Total']/df_totals['All']
-df_totals.reindex(index = ['White','Black','Other']).to_csv('pie1.csv')
+df_totals.reindex(index = ['White','Black','Other']).to_csv('data/pie1.csv')
 
 #Pie Chart 2
 df_armed = df
@@ -63,14 +63,14 @@ df_unarmed = df_armed.groupby('armed').get_group('No')[['armed','race','Total']]
 df_unarmed['All'] = df_unarmed['Total'].sum()
 df_unarmed['pct'] = df_unarmed['Total']/df_unarmed['All']
 df_unarmed['race'] = pd.Categorical(df_unarmed['race'], ['White','Black','Other'])
-df_unarmed.sort_values('race').to_csv('pie2.csv')
+df_unarmed.sort_values('race').to_csv('data/pie2.csv')
 
 #Pie Chart 3
 df_firearm = df_armed.groupby('armed').get_group('Firearm')[['armed','race','Total']]
 df_firearm['All'] = df_firearm['Total'].sum()
 df_firearm['pct'] = df_firearm['Total']/df_firearm['All']
 df_firearm['race'] = pd.Categorical(df_firearm['race'], ['White','Black','Other'])
-df_firearm.sort_values('race').to_csv('pie3.csv')
+df_firearm.sort_values('race').to_csv('data/pie3.csv')
 
 #Pie Chart 4
 df_other = df_armed.groupby('armed').get_group('Other')[['armed','race','Total']]
@@ -86,5 +86,5 @@ df_demo = df_demo[['race_cat','pop_mil']]
 df_demo = df_demo.groupby(['race_cat']).sum()
 df_demo['All'] = df_demo['pop_mil'].sum()
 df_demo['pct'] = df_demo['pop_mil']/df_demo['All']
-df_demo.reindex(index = ['White','Black','Other']).to_csv('pie4.csv')
+df_demo.reindex(index = ['White','Black','Other']).to_csv('data/pie4.csv')
 print df_demo
