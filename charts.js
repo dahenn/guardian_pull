@@ -154,8 +154,8 @@ d3.json("states.json", function(error, UnitedStates) {
     g.append('circle')
       .datum(events[i])
       .attr('id', function(d) {return d['race']; })
-      .attr('class', function(d) {return 'event ' + d['date_index'] + " " + d['armed']; })
-      .attr('r', 1.5)
+      .attr('class', function(d) {return 'event date' + d['date_index'] + " " + d['armed']; })
+      .attr('r',1.2)
       .attr("transform", function(d) {return "translate(" + projection([d["long"],d["lat"]]) + ")";})
     .append('title')
       .text(function(d) {return d['race'] + " " + d['sex'] + ", Armed: " + d['armed']; });
@@ -170,6 +170,86 @@ function zoomed() {
 }
 
 d3.select(self.frameElement).style("height", height + "px");
+
+/******************* Map Slider *******************/
+
+var slidermargin = {top: 20, right: 50, bottom: 20, left: 50},
+    sliderwidth = 1400 - slidermargin.left - slidermargin.right,
+    sliderheight = 50 - slidermargin.bottom - slidermargin.top;
+
+
+var sliderx = d3.scale.linear()
+    .domain([1,468])
+    .range([0, sliderwidth])
+    .clamp(true);
+
+var brush = d3.svg.brush()
+    .x(sliderx)
+    .extent([0, 0])
+    .on("brush", brushed);
+
+var slidersvg = d3.select("div.slider").append("svg")
+    .attr("width", sliderwidth + slidermargin.left + slidermargin.right)
+    .attr("height", sliderheight + slidermargin.top + slidermargin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + slidermargin.left + "," + slidermargin.top + ")");
+
+slidersvg.append("g")
+    .attr("class", "sliderx slideraxis")
+    .attr("transform", "translate(0," + sliderheight / 2 + ")")
+    .call(d3.svg.axis()
+      .scale(sliderx)
+      .orient("bottom")
+      .tickSize(0)
+      .tickPadding(12)
+      .tickValues([sliderx.domain()[0], sliderx.domain()[1]]))
+  .select(".domain")
+  .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
+    .attr("class", "halo");
+
+var slider = slidersvg.append("g")
+    .attr("class", "slider")
+    .call(brush);
+
+slider.selectAll(".extent,.resize")
+    .remove();
+
+slider.select(".background")
+    .attr("height", sliderheight);
+
+var handle = slider.append("circle")
+    .attr("class", "handle")
+    .attr("transform", "translate(0," + sliderheight / 2 + ")")
+    .attr('fill', 'white')
+    .attr("r", 7);
+
+slider
+    .call(brush.event)
+
+var dateText = d3.select('span#date')
+  .append('text')
+    .text('JANUARY 1, 2015');
+
+function brushed() {
+  var value = brush.extent()[0];
+
+  if (d3.event.sourceEvent) { // not a programmatic event
+    value = sliderx.invert(d3.mouse(this)[0]);
+    brush.extent([value, value]);
+  }
+
+  handle.attr("cx", sliderx(value));
+  d3.selectAll('circle.date' + value.toFixed(0))
+    .transition().duration(100)
+    .attr('r',9)
+    .transition().delay(750).duration(750)
+    .attr('r',1.2);
+  d3.json("date_key.json", function(error, data) {
+    if (error) return console.error(error);
+    dateText.datum(data).text(function(d) {return d[value.toFixed(0)];});
+  });
+}
+
 
 /******************* PIE 1 *******************/
 

@@ -17,6 +17,7 @@ svg.map {
 .state {
   fill: #f8f8f8;
   stroke: #232323;
+  stroke-width: 0.25;
   stroke-linejoin: round;
   z-index: 0;
 }
@@ -56,7 +57,7 @@ div.center{
   margin-bottom:100px;
 }
 
-div.map{border-bottom: 4px solid #353535;margin-bottom:15px;}
+div.map{border-bottom: 4px solid #353535;margin-bottom:5px;}
 
 h1, h2{
   margin-top:0px;
@@ -110,6 +111,21 @@ p{text-align: left; text-indent: 2.0em;}
   shape-rendering: crispEdges;
 }
 
+.slideraxis {
+  fill: gray;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+.slideraxis .halo {
+  stroke: gray;
+  stroke-width: 4px;
+  stroke-linecap: round;
+}
+
+.slideraxis text {visibility: hidden;}
+
 .x.axis path {
   display: none;
 }
@@ -130,14 +146,21 @@ g.Black{fill: #fff;}
 
 text.50 {margin-left:-20px;}
 
+.date{height:25px;}
+.date p {
+  text-align: left;
+  display:inline;
+}
+
 </style>
 <script src="//d3js.org/d3.v3.min.js"></script>
 <script src="//d3js.org/topojson.v1.min.js"></script>
 <body>
   <div class='center'>
     <h1> Police Killings, 2015 to Present</h1>
-    <div class='map'>
-    </div>
+    <div class='map'></div>
+    <div class='date'><p>Use the slider to see deaths on date: </p><br/><span id='date'></div>
+    <div class='slider'></span></div>
     <div class='key'>
       <h2>Key</h2>
       <div class='key1'>

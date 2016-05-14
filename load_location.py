@@ -12,6 +12,14 @@ scontext = None
 conn = sqlite3.connect('police_killings.sqlite')
 cur = conn.cursor()
 
+cur.execute('SELECT DISTINCT date_index, date from Locations')
+data = cur.fetchall()
+date_key = {}
+for index, date in data:
+    date_key[index] = date
+print date_key
+with open('date_key.json', 'w') as outfile:
+    json.dump(date_key, outfile)
 cur.execute('''
 CREATE TABLE IF NOT EXISTS Locations
     (date TEXT,
@@ -99,11 +107,11 @@ for row in data:
             VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?)''', ( row[0], row[1], row[5], row[6], row[7], row[8], lat, lng, date_index) )
     conn.commit()
     time.sleep(1)
-cur.execute('''SELECT date, race, sex, armed, cause, lat, long, date_index from Locations''')
+cur.execute('''SELECT date, name, race, sex, armed, cause, lat, long, date_index from Locations''')
 data = cur.fetchall()
 features = list()
 for row in data:
-    feature = {'date': row[0], 'race': row[1], 'sex': row[2], 'armed': row[3], 'cause': row[4], 'lat': row[5], 'long': row[6], 'date_index': row[7] }
+    feature = {'date': row[0], 'name': row[1], 'race': row[2], 'sex': row[3], 'armed': row[4], 'cause': row[5], 'lat': row[6], 'long': row[7], 'date_index': row[8] }
     # print "Lat: ",row[5],"\t", "Long: ",row[6]
     features.append(feature)
 # print json.dumps(features, indent=4, sort_keys=True)
