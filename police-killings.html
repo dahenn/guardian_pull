@@ -146,11 +146,26 @@ g.Black{fill: #fff;}
 
 text.50 {margin-left:-20px;}
 
-.date{height:25px;}
+.date{
+  height:25px;
+  margin-bottom: 5px;
+}
 .date p {
   text-align: left;
   display:inline;
 }
+.button {
+  display: inline-block;
+  width:90px;
+  background: #353535;
+  border: none;
+  padding:5px;
+  color: #f8f8f8;
+  cursor:pointer;
+  font-weight: bold;
+}
+.button:active{background:#777;}
+.button:focus{outline:none;}
 
 </style>
 <script src="//d3js.org/d3.v3.min.js"></script>
@@ -159,8 +174,29 @@ text.50 {margin-left:-20px;}
   <div class='center'>
     <h1> Police Killings, 2015 to Present</h1>
     <div class='map'></div>
-    <div class='date'><p>Use the slider to see deaths on date: </p><br/><span id='date'></div>
-    <div class='slider'></span></div>
+    <div class='date'><span id='date'></span></div>
+    <div class='slider'>
+      <input name="updateButton"
+             type="button"
+             value="Previous"
+             onclick="prevDate()"
+             class="button button-prev" />
+       <input name="updateButton"
+              type="button"
+              value="Stop"
+              onclick="stopData()"
+              class="button button-play" />
+      <input name="updateButton"
+             type="button"
+             value="Play"
+             onclick="playData()"
+             class="button button-stop" />
+       <input name="updateButton"
+              type="button"
+              value="Next"
+              onclick="nextDate()"
+              class="button button-next" />
+    </div>
     <div class='key'>
       <h2>Key</h2>
       <div class='key1'>

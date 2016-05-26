@@ -179,7 +179,7 @@ var slidermargin = {top: 20, right: 50, bottom: 20, left: 50},
 
 
 var sliderx = d3.scale.linear()
-    .domain([1,468])
+    .domain([1,482])
     .range([0, sliderwidth])
     .clamp(true);
 
@@ -239,15 +239,66 @@ function brushed() {
   }
 
   handle.attr("cx", sliderx(value));
+  //console.log(value);
   d3.selectAll('circle.date' + value.toFixed(0))
     .transition().duration(100)
     .attr('r',9)
-    .transition().delay(750).duration(750)
+    .transition().delay(500).duration(500)
     .attr('r',1.2);
   d3.json("date_key.json", function(error, data) {
     if (error) return console.error(error);
     dateText.datum(data).text(function(d) {return d[value.toFixed(0)];});
   });
+}
+
+function sleep(milliseconds) {
+  var start = new Date().getTime();
+  for (var i = 0; i < 1e7; i++) {
+    if ((new Date().getTime() - start) > milliseconds){
+      break;
+    }
+  }
+}
+
+function nextDate() {
+  var current = brush.extent()[0];
+  var next = current + 1;
+  if (current > 482) { next = 1;}
+  brush.extent([next,next]);
+  handle.attr("cx", sliderx(brush.extent()[0]));
+  d3.selectAll('circle.date' + next.toFixed(0))
+    .transition().duration(100)
+    .attr('r',9)
+    .transition().delay(500).duration(500)
+    .attr('r',1.2);
+  d3.json("date_key.json", function(error, data) {
+    if (error) return console.error(error);
+    dateText.datum(data).text(function(d) {return d[next.toFixed(0)];});
+  });
+}
+
+function prevDate() {
+  var current = brush.extent()[0];
+  var next = current - 1;
+  brush.extent([next,next]);
+  handle.attr("cx", sliderx(brush.extent()[0]));
+  d3.selectAll('circle.date' + next.toFixed(0))
+    .transition().duration(100)
+    .attr('r',9)
+    .transition().delay(500).duration(500)
+    .attr('r',1.2);
+  d3.json("date_key.json", function(error, data) {
+    if (error) return console.error(error);
+    dateText.datum(data).text(function(d) {return d[next.toFixed(0)];});
+  });
+}
+var player = setInterval(function(){nextDate(); }, 120);
+function playData() {
+  player = setInterval(function(){nextDate(); }, 120);
+}
+
+function stopData() {
+  clearInterval(player);
 }
 
 
