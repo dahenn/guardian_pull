@@ -179,7 +179,7 @@ var slidermargin = {top: 20, right: 50, bottom: 20, left: 50},
 
 
 var sliderx = d3.scale.linear()
-    .domain([1,482])
+    .domain([1,523])
     .range([0, sliderwidth])
     .clamp(true);
 
@@ -263,7 +263,7 @@ function sleep(milliseconds) {
 function nextDate() {
   var current = brush.extent()[0];
   var next = current + 1;
-  if (current > 482) { next = 1;}
+  if (current > 523) { next = 1;}
   brush.extent([next,next]);
   handle.attr("cx", sliderx(brush.extent()[0]));
   d3.selectAll('circle.date' + next.toFixed(0))
