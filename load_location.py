@@ -11,15 +11,6 @@ scontext = None
 
 conn = sqlite3.connect('police_killings.sqlite')
 cur = conn.cursor()
-
-cur.execute('SELECT DISTINCT date_index, date from Locations')
-data = cur.fetchall()
-date_key = {}
-for index, date in data:
-    date_key[index] = date
-print date_key
-with open('date_key.json', 'w') as outfile:
-    json.dump(date_key, outfile)
 cur.execute('''
 CREATE TABLE IF NOT EXISTS Locations
     (date TEXT,
@@ -32,6 +23,14 @@ CREATE TABLE IF NOT EXISTS Locations
     long REAL,
     date_index INT,
     UNIQUE(name, lat, long, date))''')
+cur.execute('SELECT DISTINCT date_index, date from Locations')
+data = cur.fetchall()
+date_key = {}
+for index, date in data:
+    date_key[index] = date
+print date_key
+with open('date_key.json', 'w') as outfile:
+    json.dump(date_key, outfile)
 
 cur.execute('''
 CREATE TABLE IF NOT EXISTS Deaths_Indexed
@@ -115,6 +114,6 @@ for row in data:
     # print "Lat: ",row[5],"\t", "Long: ",row[6]
     features.append(feature)
 # print json.dumps(features, indent=4, sort_keys=True)
-with open('event_points.json', 'w') as outfile:
+with open('event_points1.json', 'w') as outfile:
     json.dump(features, outfile)
 print "Data Written"

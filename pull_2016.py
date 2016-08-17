@@ -61,6 +61,7 @@ for month in months:
                             time.sleep(2)
                             link.click()
                         except:
+                            close.click()
                             time.sleep(10)
                             link.click()
             try:

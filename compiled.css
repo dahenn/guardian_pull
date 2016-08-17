@@ -1,0 +1,218 @@
+body {
+  background: #232929;
+  color: #eaf1f1;
+  text-align: justify;
+  line-height: 1.5em;
+  font-family: "Roboto";
+  font-size: 16px;
+  width: 100%; }
+
+a {
+  color: #31afb1; }
+
+a:visited {
+  color: #298788; }
+
+h2 {
+  color: #31afb1;
+  font: "Roboto Condensed" 2.5em;
+  font-weight: 300; }
+
+h3 {
+  font-weight: 300; }
+
+div {
+  margin: auto;
+  font: "Roboto";
+  font-weight: 300; }
+  div .header {
+    margin-top: 40px; }
+    div .header .header-left h1.top {
+      font-size: 3.5em;
+      font-weight: 500;
+      letter-spacing: 1px;
+      margin-top: 0px; }
+    div .header .header-left h2.top {
+      font-size: 2em;
+      letter-spacing: 1px;
+      text-align: left;
+      margin-top: 20px;
+      margin-right: 15px;
+      padding-bottom: 0px;
+      font-weight: 300;
+      color: #c2c8c8; }
+    div .header .header-right {
+      text-align: right;
+      font-size: 0.8em; }
+      div .header .header-right h2 {
+        margin-top: 10px; }
+      div .header .header-right h3 {
+        font-size: 1.4em;
+        margin-top: -5px; }
+      div .header .header-right a {
+        font-weight: 500;
+        color: #25dcde;
+        text-decoration: none; }
+  div .btn-primary {
+    background-color: #3a4242;
+    border-color: #3a4242;
+    min-width: 100px; }
+  div .btn-primary:hover, div .btn-primary:active, div .btn-primary:focus {
+    background-color: #266364;
+    border-color: #3a4242; }
+  div .title {
+    text-align: left; }
+  div .text {
+    background: #3a4242;
+    padding-top: 10px; }
+  div .key {
+    margin-bottom: 50px; }
+    div .key .key1 {
+      padding: 10px;
+      padding-left: 50px; }
+    div .key .key2 {
+      padding: 10px; }
+    div .key h3 {
+      margin: 0px 0px 5px 0px;
+      font-weight: 400; }
+  div .data-info {
+    margin-bottom: 50px; }
+  div .insight {
+    text-align: center; }
+    div .insight h3 {
+      font-size: 1.5em;
+      font-family: "Roboto Condensed";
+      font-weight: 300; }
+    div .insight h3 span.emphasis {
+      color: #31afb1;
+      font-weight: 600; }
+  div .stats {
+    display: inline-block;
+    padding: 1%;
+    vertical-align: top;
+    text-align: center; }
+    div .stats h3, div .stats h4 {
+      margin-top: 0px;
+      font-weight: normal; }
+    div .stats h4 {
+      margin-bottom: 0.75em; }
+  div .no-inline {
+    display: block; }
+
+.divider {
+  margin-bottom: 40px;
+  width: 100%;
+  background: #298788;
+  padding: 30px 0;
+  font-style: italic;
+  margin-top: 100px;
+  display: table; }
+  .divider h2 {
+    text-align: center;
+    margin: 0px; }
+  .divider .left h2 {
+    color: #266364;
+    font-family: "Roboto Condensed";
+    font-weight: 700;
+    font-size: 4em;
+    width: 100%; }
+  .divider .right h2 {
+    color: #eaf1f1;
+    font-weight: 300;
+    margin-bottom: 0px;
+    line-height: 40px;
+    text-align: left; }
+
+.button-container {
+  width: 30%; }
+
+.map svg {
+  width: 100%;
+  background: #3a4242;
+  margin-bottom: 10px;
+  margin-top: 20px; }
+  .map svg circle {
+    fill: #e18a24;
+    opacity: 0.7; }
+  .map svg .state {
+    fill: #eaf1f1;
+    stroke: #232323;
+    stroke-width: 0.25;
+    stroke-linejoin: round;
+    z-index: 0; }
+  .map svg .event.No {
+    fill-opacity: 0.7; }
+  .map svg .event.Firearm {
+    fill-opacity: 0.2; }
+  .map svg .overlay {
+    fill: none;
+    pointer-events: all; }
+
+svg.example {
+  width: 12px;
+  height: 12px; }
+
+.low-opacity {
+  opacity: 0.2; }
+
+.med-opacity {
+  opacity: 0.4; }
+
+.high-opacity {
+  opacity: 0.7; }
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #f8f8f8;
+  shape-rendering: crispEdges; }
+
+#White {
+  fill: #4e44d0;
+  color: #4e44d0; }
+
+#Black {
+  fill: #ab0101;
+  color: #ab0101; }
+
+#Other {
+  fill: #e18a24;
+  color: #e18a24; }
+
+.slideraxis {
+  fill: gray;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none; }
+
+.slideraxis .halo {
+  stroke: gray;
+  stroke-width: 4px;
+  stroke-linecap: round; }
+
+.slideraxis text {
+  visibility: hidden; }
+
+.x.axis path {
+  display: none; }
+
+text {
+  fill: #eaf1f1;
+  font-weight: 400; }
+
+g.Black {
+  fill: #fff; }
+
+.date {
+  height: 25px;
+  margin-bottom: 5px;
+  width: 200px;
+  text-align: center; }
+
+.date text {
+  display: inline; }
+
+#chart2 {
+  margin-bottom: 25px; }
+
+/*# sourceMappingURL=compiled.css.map */

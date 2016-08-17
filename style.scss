@@ -1,0 +1,233 @@
+$font1: 'Roboto';
+$font2: 'Roboto Condensed';
+$text-color: #eaf1f1;
+$darkest: #232929;
+$darker: #266364;
+$dark: #298788;
+$medium: #31afb1;
+$light: #25dcde;
+$grey: #c2c8c8;
+$text-bg: #3a4242;
+
+body {
+  background: $darkest;
+  color:$text-color;
+  text-align: justify;
+  line-height: 1.5em;
+  font-family: $font1;
+  font-size: 16px;
+  width: 100%;
+}
+
+a {color: $medium;}
+a:visited {color: $dark;}
+
+h2 {
+  color: $medium;
+  font: $font2 2.5em;
+  font-weight: 300;
+}
+
+h3 {font-weight: 300;}
+
+div {
+  margin: auto;
+  font: $font1;
+  font-weight: 300;
+  .header {
+      margin-top: 40px;
+      .header-left{
+          h1.top {
+            font-size: 3.5em;
+            font-weight: 500;
+            letter-spacing: 1px;
+            margin-top: 0px;
+          }
+          h2.top {
+            font-size: 2em;
+            letter-spacing: 1px;
+            text-align: left;
+            margin-top: 20px;
+            margin-right: 15px;
+            padding-bottom: 0px;
+            font-weight: 300;
+            color: $grey;
+          }
+      }
+      .header-right {
+          text-align: right;
+          font-size: 0.8em;
+          h2 {margin-top: 10px;}
+          h3 {
+            font-size: 1.4em;
+            margin-top: -5px;
+          }
+          a {
+            font-weight: 500;
+            color: $light;
+            text-decoration: none;
+          }
+      }
+  }
+  .btn-primary {
+      background-color: $text-bg;
+      border-color: $text-bg;
+      min-width: 60px;
+  }
+  .btn-primary:hover, .btn-primary:active, .btn-primary:focus, .btn-primary:active:hover {background-color: $darker;border-color: $text-bg;}
+  .title {
+      text-align: left;
+  }
+  .text {
+      background: $text-bg;
+      padding-top:10px;
+      float:left;
+  }
+  .key {
+    margin-bottom: 50px;
+    .key1 {
+      padding:10px;
+      padding-left: 10%;
+    }
+    .key2 {
+      padding:10px;
+    }
+    h3 {
+        margin:0px 0px 5px 0px;
+        font-weight: 400;
+    }
+  }
+  .data-info {
+    margin-bottom: 50px;
+  }
+  .insight {
+    text-align: center;
+    h3 {
+        font-size:1.5em;
+        font-family: $font2;
+        font-weight: 300;
+    }
+    h3 span.emphasis {
+        color: $medium;
+        font-weight: 600;
+    }
+  }
+  .stats {
+    display:inline-block;
+    padding:1%;
+    vertical-align: top;
+    text-align: center;
+    h3, h4 {margin-top:0px; font-weight:normal;}
+    h4 {margin-bottom: 0.75em;}
+  }
+  .no-inline {
+    display: block;
+  }
+}
+
+.divider {
+  margin-bottom:40px;
+  width:100%;
+  background: $dark;
+  padding: 30px 0;
+  font-style: italic;
+  margin-top: 100px;
+  display:table;
+  h2 {
+    text-align: center;
+    margin: 0px;
+  }
+  .left h2 {
+    color: $darker;
+    font-family: $font2;
+    font-weight: 700;
+    font-size: 4em;
+    width:100%;
+    margin-bottom: 10px;
+  }
+  .right h2 {
+    color: $text-color;
+    font-weight: 300;
+    margin-bottom: 0px;
+    line-height: 40px;
+    text-align: left;
+  }
+}
+
+//Page specific CSS
+
+.button-container {
+  width:30%;
+}
+
+.map svg {
+    width:100%;
+  background: $text-bg;
+  margin-bottom: 10px;
+  margin-top: 20px;
+  circle {fill:#e18a24;opacity: 0.7;}
+  .state {
+    fill: $text-color;
+    stroke: #232323;
+    stroke-width: 0.25;
+    stroke-linejoin: round;
+    z-index: 0;
+  }
+  .event.No{fill-opacity: 0.7;}
+  .event.Firearm{fill-opacity: 0.2;}
+  .overlay {
+    fill: none;
+    pointer-events: all;
+  }
+}
+svg.example{
+  width:12px;
+  height:12px;
+}
+.low-opacity{opacity:0.2}
+.med-opacity{opacity:0.4}
+.high-opacity{opacity:0.7}
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #f8f8f8;
+  shape-rendering: crispEdges;
+}
+
+#White{fill:#4e44d0; color:#4e44d0;}
+#Black{fill:#ab0101; color:#ab0101;}
+#Other{fill:#e18a24; color:#e18a24;}
+
+.slideraxis {
+  fill: gray;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+.slideraxis .halo {
+  stroke: gray;
+  stroke-width: 4px;
+  stroke-linecap: round;
+}
+
+.slideraxis text {visibility: hidden;}
+
+.x.axis path {
+  display: none;
+}
+
+text {fill: $text-color; font-weight: 400; }
+g.Black{fill: #fff;}
+
+.date{
+  height:25px;
+  margin-bottom: 5px;
+  width: 200px;
+  text-align: center;
+}
+.date text {
+  display:inline;
+}
+
+#chart2 {margin-bottom: 25px;}

@@ -1,7 +1,7 @@
 /******************CHART********************/
 var margin = {top: 20, right: 20, bottom: 30, left: 40},
-    chartwidth = 1200 - margin.left - margin.right,
-    chartheight = 600 - margin.top - margin.bottom;
+    chartwidth = parseInt(d3.select('#chart1').style('width')) - margin.left - margin.right,
+    chartheight = chartwidth*1.1 - margin.top - margin.bottom;
 
 var x = d3.scale.ordinal()
     .rangeRoundBands([0, chartwidth], .15);
@@ -21,7 +21,7 @@ var yAxis = d3.svg.axis()
     .orient("left")
     .tickFormat(d3.format(".2s"));
 
-var chartsvg = d3.select("div.chart1").append("svg")
+var chartsvg = d3.select("div#chart2").append("svg")
     .attr("width", chartwidth + margin.left + margin.right)
     .attr("height", chartheight + margin.top + margin.bottom)
   .append("g")
@@ -41,7 +41,7 @@ d3.csv("chart1.csv", function(error, data) {
   data.sort(function(a, b) { return b.total - a.total; });
 
   x.domain(data.map(function(d) { return d.race; }));
-  y.domain([0, 10]);
+  y.domain([0, 12]);
 
   chartsvg.append("g")
       .attr("class", "x axis")
@@ -104,12 +104,12 @@ d3.csv("chart1.csv", function(error, data) {
 
 
 /******************MAPPING******************/
-var width = 1400,
-    height = 700;
+var width = parseInt(d3.select('#chart1').style('width')),
+    height = width*0.65;
 
 var projection = d3.geo.albersUsa()
     .translate([width / 2, height / 2])
-    .scale(1500);
+    .scale(width*1.2);
 
 var zoom = d3.behavior.zoom()
     .scaleExtent([1, 12])
@@ -118,7 +118,7 @@ var zoom = d3.behavior.zoom()
 var path = d3.geo.path()
     .projection(projection);
 
-var svg = d3.select("div.map").append("svg")
+var svg = d3.select("div#chart1").append("svg")
     .attr("width", width)
     .attr("height", height)
     .attr('class', 'map')
@@ -147,15 +147,15 @@ d3.json("states.json", function(error, UnitedStates) {
       .attr("d", path);
   }
 
-  d3.json("event_points.json", function(error, events) {
+  d3.json("event_points1.json", function(error, events) {
     if (error) return console.error(error);
-
+    console.log(events);
   for (var i = 0; i < events.length; i++) {
     g.append('circle')
       .datum(events[i])
       .attr('id', function(d) {return d['race']; })
       .attr('class', function(d) {return 'event date' + d['date_index'] + " " + d['armed']; })
-      .attr('r',1.2)
+      .attr('r',1)
       .attr("transform", function(d) {return "translate(" + projection([d["long"],d["lat"]]) + ")";})
     .append('title')
       .text(function(d) {return d['race'] + " " + d['sex'] + ", Armed: " + d['armed']; });
@@ -174,12 +174,12 @@ d3.select(self.frameElement).style("height", height + "px");
 /******************* Map Slider *******************/
 
 var slidermargin = {top: 20, right: 50, bottom: 20, left: 50},
-    sliderwidth = 1400 - slidermargin.left - slidermargin.right,
+    sliderwidth = parseInt(d3.select('#chart1').style('width')) - slidermargin.left - slidermargin.right,
     sliderheight = 50 - slidermargin.bottom - slidermargin.top;
 
 
 var sliderx = d3.scale.linear()
-    .domain([1,523])
+    .domain([1,559])
     .range([0, sliderwidth])
     .clamp(true);
 
@@ -263,7 +263,7 @@ function sleep(milliseconds) {
 function nextDate() {
   var current = brush.extent()[0];
   var next = current + 1;
-  if (current > 523) { next = 1;}
+  if (current >= 559) { next = 1;}
   brush.extent([next,next]);
   handle.attr("cx", sliderx(brush.extent()[0]));
   d3.selectAll('circle.date' + next.toFixed(0))
@@ -292,9 +292,9 @@ function prevDate() {
     dateText.datum(data).text(function(d) {return d[next.toFixed(0)];});
   });
 }
-var player = setInterval(function(){nextDate(); }, 120);
+var player = setInterval(function(){nextDate(); }, 250);
 function playData() {
-  player = setInterval(function(){nextDate(); }, 120);
+  player = setInterval(function(){nextDate(); }, 250);
 }
 
 function stopData() {

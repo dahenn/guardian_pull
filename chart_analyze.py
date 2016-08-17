@@ -6,7 +6,7 @@ import numpy as np
 conn = sqlite3.connect('police_killings.sqlite')
 cur = conn.cursor()
 
-cur.execute('''SELECT * from Deaths''')
+cur.execute('''SELECT DISTINCT * from Deaths''')
 data = cur.fetchall()
 index = range(1,len(data))
 date = ()
