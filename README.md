@@ -1,6 +1,6 @@
 # guardian_pull
 
-See the project <a href="http://danneh.co/police-killings.html" target="_blank">here</a>.
+See the project <a href="http://danneh.co/police/" target="_blank">here</a>.
 
 ## Project Motivation
 
