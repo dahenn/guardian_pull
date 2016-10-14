@@ -21,20 +21,34 @@
     <![endif]-->
     <script src="//d3js.org/d3.v3.min.js"></script>
     <script src="//d3js.org/topojson.v1.min.js"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-85732930-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
 </head>
 <body>
-    <div class = 'container'>
-        <div class = 'header'>
-            <div class = 'header-left col-lg-8 col-md-8 col-sm-12 col-xs-12'>
-                <h1 class='top'>POLICE KILLINGS</h1>
-                <h2 class='top' style="display: inline; float:left;">IN THE </h1>
-                <h1 class='top' style="display: inline; float:left;">UNITED STATES</h1>
-            </div>
-            <div class = 'header-right col-lg-4 col-md-4 col-sm-12 col-xs-12'>
-                <h2>DATA VISUALIZATION</h2>
-                <h3>by <a href='https://twitter.com/DannyHenn'>DANNY HENN</a></h3>
+    <div class="container-fluid header-bg">
+        <div class = 'container'>
+            <div class = 'header'>
+                <div class = 'header-left col-lg-8 col-md-8 col-sm-12 col-xs-12'>
+                    <h1 class='top'>POLICE KILLINGS</h1>
+                    <h2 class='top' style="display: inline; float:left;">IN THE </h1>
+                    <h1 class='top' style="display: inline; float:left;">UNITED STATES</h1>
+                </div>
+                <div class = 'header-right col-lg-4 col-md-4 col-sm-12 col-xs-12'>
+                    <h2>DATA VISUALIZATION</h2>
+                    <h3>by <a href='https://twitter.com/DannyHenn'>DANNY HENN</a></h3>
+                </div>
             </div>
         </div>
+    </div>
+    <div class="container">
         <div id = 'chart1' class='map'></div>
         <div class='date'><span id='date'></span></div>
         <div class='slider text-center'>
@@ -52,15 +66,15 @@
             <div class = 'text col-lg-9 col-sm-12'>
                 <div class='key1 col-xs-6'>
                   <h3>Victim Race</h3>
-                  <svg class="example"><circle id="White" r="6" transform="translate(6,6)"></svg><span>&nbsp;&nbsp;=&nbsp;&nbsp;White</span><br />
-                  <svg class="example"><circle id="Black" r="6" transform="translate(6,6)"></svg><span>&nbsp;&nbsp;=&nbsp;&nbsp;Black&nbsp;</span><br />
-                  <svg class="example"><circle id="Other" r="6" transform="translate(6,6)"></svg><span>&nbsp;&nbsp;=&nbsp;&nbsp;Other</span>
+                  <label><input type="checkbox" id="White" checked>&nbsp;&nbsp;<svg class="example"><circle id="White" r="6" transform="translate(6,6)"></svg><span>&nbsp;&nbsp;=&nbsp;&nbsp;White</span></label><br />
+                  <label><input type="checkbox" id="Black" checked>&nbsp;&nbsp;<svg class="example"><circle id="Black" r="6" transform="translate(6,6)"></svg><span>&nbsp;&nbsp;=&nbsp;&nbsp;Black&nbsp;</span></label><br />
+                  <label><input type="checkbox" id="Other" checked>&nbsp;&nbsp;<svg class="example"><circle id="Other" r="6" transform="translate(6,6)"></svg><span>&nbsp;&nbsp;=&nbsp;&nbsp;Other</span></label>
                 </div>
                 <div class='key2 col-sm-6 col-xs-12'>
                   <h3>Victim Status</h3>
-                  <span class="low-opacity">Low Opacity</span><span>&nbsp;&nbsp;=&nbsp;&nbsp;Armed with Firearm</span><br />
-                  <span class="med-opacity">Medium Opacity</span><span>&nbsp;&nbsp;=&nbsp;&nbsp;Other / Unknown</span><br />
-                  <span class="high-opacity">High Opacity</span><span>&nbsp;&nbsp;=&nbsp;&nbsp;Unarmed</span>
+                  <label><input type="checkbox" id="Firearm" checked>&nbsp;&nbsp;<span class="low-opacity">Low Opacity</span><span>&nbsp;&nbsp;=&nbsp;&nbsp;Armed with Firearm</span></label><br />
+                  <label><input type="checkbox" id="Unknown" checked>&nbsp;&nbsp;<span class="med-opacity">Medium Opacity</span><span>&nbsp;&nbsp;=&nbsp;&nbsp;Other / Unknown</span></label><br />
+                  <label><input type="checkbox" id="No" checked>&nbsp;&nbsp;<span class="high-opacity">High Opacity</span><span>&nbsp;&nbsp;=&nbsp;&nbsp;Unarmed</span></label>
                 </div>
             </div>
         </div>

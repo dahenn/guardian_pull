@@ -4,6 +4,7 @@ import json
 import time
 import ssl
 import re
+import pandas as pd
 
 serviceurl = "http://maps.googleapis.com/maps/api/geocode/json?"
 
@@ -113,7 +114,10 @@ for row in data:
     feature = {'date': row[0], 'name': row[1], 'race': row[2], 'sex': row[3], 'armed': row[4], 'cause': row[5], 'lat': row[6], 'long': row[7], 'date_index': row[8] }
     # print "Lat: ",row[5],"\t", "Long: ",row[6]
     features.append(feature)
-# print json.dumps(features, indent=4, sort_keys=True)
+df = pd.DataFrame(features)
+df['race'].loc[~df['race'].isin(['White','Black'])] = 'Other'
+df['armed'].loc[~df['armed'].isin(['Firearm','No'])] = 'Unknown'
+features = df.to_dict('records')
 with open('event_points1.json', 'w') as outfile:
     json.dump(features, outfile)
 print "Data Written"

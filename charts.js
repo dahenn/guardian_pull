@@ -149,13 +149,13 @@ d3.json("states.json", function(error, UnitedStates) {
 
   d3.json("event_points1.json", function(error, events) {
     if (error) return console.error(error);
-    console.log(events);
+    //console.log(events);
   for (var i = 0; i < events.length; i++) {
     g.append('circle')
       .datum(events[i])
       .attr('id', function(d) {return d['race']; })
       .attr('class', function(d) {return 'event date' + d['date_index'] + " " + d['armed']; })
-      .attr('r',1)
+      .attr('r',1.5)
       .attr("transform", function(d) {return "translate(" + projection([d["long"],d["lat"]]) + ")";})
     .append('title')
       .text(function(d) {return d['race'] + " " + d['sex'] + ", Armed: " + d['armed']; });
@@ -179,7 +179,7 @@ var slidermargin = {top: 20, right: 50, bottom: 20, left: 50},
 
 
 var sliderx = d3.scale.linear()
-    .domain([1,559])
+    .domain([1,611])
     .range([0, sliderwidth])
     .clamp(true);
 
@@ -244,7 +244,7 @@ function brushed() {
     .transition().duration(100)
     .attr('r',9)
     .transition().delay(500).duration(500)
-    .attr('r',1.2);
+    .attr('r',1.5);
   d3.json("date_key.json", function(error, data) {
     if (error) return console.error(error);
     dateText.datum(data).text(function(d) {return d[value.toFixed(0)];});
@@ -263,14 +263,14 @@ function sleep(milliseconds) {
 function nextDate() {
   var current = brush.extent()[0];
   var next = current + 1;
-  if (current >= 559) { next = 1;}
+  if (current >= 611) { next = 1;}
   brush.extent([next,next]);
   handle.attr("cx", sliderx(brush.extent()[0]));
   d3.selectAll('circle.date' + next.toFixed(0))
     .transition().duration(100)
     .attr('r',9)
     .transition().delay(500).duration(500)
-    .attr('r',1.2);
+    .attr('r',1.5);
   d3.json("date_key.json", function(error, data) {
     if (error) return console.error(error);
     dateText.datum(data).text(function(d) {return d[next.toFixed(0)];});
@@ -286,7 +286,7 @@ function prevDate() {
     .transition().duration(100)
     .attr('r',9)
     .transition().delay(500).duration(500)
-    .attr('r',1.2);
+    .attr('r',1.5);
   d3.json("date_key.json", function(error, data) {
     if (error) return console.error(error);
     dateText.datum(data).text(function(d) {return d[next.toFixed(0)];});
@@ -301,6 +301,45 @@ function stopData() {
   clearInterval(player);
 }
 
+/******************* Checkboxes *******************/
+d3.select("input#White").on("change", change);
+d3.select("input#Black").on("change", change);
+d3.select("input#Other").on("change", change);
+
+function change() {
+    this.checked
+    ? d3.selectAll('circle.event#' + d3.select(this).attr('id')).style('display', 'inline')
+    : d3.selectAll('circle.event#' + d3.select(this).attr('id')).style('display', 'none');
+
+    if (!d3.select("input#Firearm").property('checked')) {
+        d3.selectAll('circle.event.Firearm#' + d3.select(this).attr('id')).style('display', 'none');
+    };
+    if (!d3.select("input#No").property('checked')) {
+        d3.selectAll('circle.event.No#' + d3.select(this).attr('id')).style('display', 'none');
+    };
+    if (!d3.select("input#Unknown").property('checked')) {
+        d3.selectAll('circle.event.Unknown#' + d3.select(this).attr('id')).style('display', 'none');
+    };
+};
+
+d3.select("input#Firearm").on("change", change_armed);
+d3.select("input#No").on("change", change_armed);
+d3.select("input#Unknown").on("change", change_armed);
+function change_armed() {
+    this.checked
+    ? d3.selectAll('circle.event.' + d3.select(this).attr('id')).style('display', 'inline')
+    : d3.selectAll('circle.event.' + d3.select(this).attr('id')).style('display', 'none');
+
+    if (!d3.select("input#White").property('checked')) {
+        d3.selectAll('circle.event.' + d3.select(this).attr('id') + '#White').style('display', 'none');
+    };
+    if (!d3.select("input#Black").property('checked')) {
+        d3.selectAll('circle.event.' + d3.select(this).attr('id') + '#Black').style('display', 'none');
+    };
+    if (!d3.select("input#Other").property('checked')) {
+        d3.selectAll('circle.event.' + d3.select(this).attr('id') + '#Other').style('display', 'none');
+    };
+};
 
 /******************* PIE 1 *******************/
 

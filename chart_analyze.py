@@ -25,9 +25,9 @@ for row in data:
     state = (row[7],) + state
     armed = (row[8],) + armed
 data_dict = {'date':date, 'name':name, 'race':race, 'sex':sex, 'age':age, 'state':state, 'armed':armed}
-
 df = pd.DataFrame.from_dict(data_dict)
-
+armed = df['armed']
+print armed
 #Bar Chart 1
 df['race'] = df['race'].replace('Asian/Pacific Islande','Asian').replace('Hispanic/Latino','Hispanic').replace('Native','Native American')
 df_grouped = df.groupby(['armed','race']).count().rename(columns = {'age':'count'})['count']
@@ -88,3 +88,20 @@ df_demo['All'] = df_demo['pop_mil'].sum()
 df_demo['pct'] = df_demo['pop_mil']/df_demo['All']
 df_demo.reindex(index = ['White','Black','Other']).to_csv('data/pie4.csv')
 print df_demo
+
+#Time series
+
+df['race'].loc[~df['race'].isin(['White','Black'])] = 'Other'
+df['armed1'] = armed
+print df
+#df['armed'].loc[~df['armed'].isin(['Firearm','No'])] = 'Unknown'
+dates = df['date'].str.split(' ', expand = True)
+df['date'] = pd.to_datetime(df['date'])
+df['month'] = dates[0]
+df['year'] = dates[2]
+df['ym'] = df['date'].map(lambda x: 1000*x.year + x.month)
+ts_race = df.groupby(['ym', 'year', 'month', 'race']).count().rename(columns = {'age':'count'})['count'].unstack().fillna(0)
+ts_armed = df.groupby(['ym', 'year', 'month', 'armed']).count().rename(columns = {'age':'count'})['count'].unstack().fillna(0)
+print ts_armed
+ts_race.to_csv('data/ts_race.csv')
+ts_armed.to_csv('data/ts_armed.csv')

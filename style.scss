@@ -1,14 +1,23 @@
 $font1: 'Roboto';
 $font2: 'Roboto Condensed';
 $text-color: #eaf1f1;
-$darkest: #232929;
+$darkest: #191c1c;
 $darker: #266364;
 $dark: #298788;
 $medium: #31afb1;
 $light: #25dcde;
-$grey: #c2c8c8;
-$text-bg: #3a4242;
-
+$grey: #aaa;
+$text-bg: #222828;
+/*
+$text-color: #eee;
+$darkest: #111;
+$darker: #222;
+$dark: #555;
+$medium: #777;
+$light: #eee;
+$grey: #bbb;
+$text-bg: #333;
+*/
 body {
   background: $darkest;
   color:$text-color;
@@ -19,8 +28,9 @@ body {
   width: 100%;
 }
 
-a {color: $medium;}
-a:visited {color: $dark;}
+a, a:visited {color: $grey; text-decoration: none;}
+a:hover {color: $grey; text-decoration: underline;}
+h1,
 
 h2 {
   color: $medium;
@@ -42,6 +52,7 @@ div {
             font-weight: 500;
             letter-spacing: 1px;
             margin-top: 0px;
+            color: $text-color;
           }
           h2.top {
             font-size: 2em;
@@ -74,14 +85,19 @@ div {
       border-color: $text-bg;
       min-width: 60px;
   }
-  .btn-primary:hover, .btn-primary:active, .btn-primary:focus, .btn-primary:active:hover {background-color: $darker;border-color: $text-bg;}
+  .btn-primary.active, .btn-primary.active:hover, .btn-primary.active.focus, .btn-primary:hover, .btn-primary:active, .btn-primary:focus, .btn-primary:active:hover {background-color: $darker;border-color: $text-bg;}
   .title {
       text-align: left;
   }
   .text {
-      background: $text-bg;
-      padding-top:10px;
+      //background: $text-bg;
+      padding:15px;
       float:left;
+      border-radius: 8px;
+  }
+  .full-width {
+      margin-bottom:30px;
+      h3 {color: $medium;}
   }
   .key {
     margin-bottom: 50px;
@@ -99,13 +115,21 @@ div {
   }
   .data-info {
     margin-bottom: 50px;
+    span.emphasis {
+        color: $medium;
+        font-family: $font2;
+        font-weight: 400;
+        font-size: 1.2em;
+    }
   }
   .insight {
     text-align: center;
+    margin: 40px 0 ;
     h3 {
         font-size:1.5em;
         font-family: $font2;
         font-weight: 300;
+        line-height: 1.5em;
     }
     h3 span.emphasis {
         color: $medium;
@@ -128,17 +152,17 @@ div {
 .divider {
   margin-bottom:40px;
   width:100%;
-  background: $dark;
+  background: $darker;
   padding: 30px 0;
   font-style: italic;
-  margin-top: 100px;
+  margin-top: 60px;
   display:table;
   h2 {
     text-align: center;
     margin: 0px;
   }
   .left h2 {
-    color: $darker;
+    color: $text-color;
     font-family: $font2;
     font-weight: 700;
     font-size: 4em;
@@ -150,11 +174,31 @@ div {
     font-weight: 300;
     margin-bottom: 0px;
     line-height: 40px;
-    text-align: left;
+    text-align: center;
   }
 }
 
+.feedback {
+    text-align: center;
+    padding: 20px;
+    border-radius: 4px;
+    background: $text-bg;
+    h3 {margin: 0px;}
+}
+
 //Page specific CSS
+@media (max-width:650px) {
+    div .header .header-left h1.top {font-size:1.8em;}
+    div .header .header-left h2.top {font-size:1.2em; margin-top: 8px;}
+    div .header .header-right h2 {font-size:1.5em;}
+}
+
+.header-bg {
+    background: url('img/bg.png');
+    background-position: center;
+    background-size: cover;
+    margin-bottom: 100px;
+}
 
 .button-container {
   width:30%;
@@ -165,7 +209,7 @@ div {
   background: $text-bg;
   margin-bottom: 10px;
   margin-top: 20px;
-  circle {fill:#e18a24;opacity: 0.7;}
+  circle {fill:#e18a24;}
   .state {
     fill: $text-color;
     stroke: #232323;
@@ -174,6 +218,7 @@ div {
     z-index: 0;
   }
   .event.No{fill-opacity: 0.7;}
+  .event.Unknown{fill-opacity: 0.4;}
   .event.Firearm{fill-opacity: 0.2;}
   .overlay {
     fill: none;
@@ -184,6 +229,7 @@ svg.example{
   width:12px;
   height:12px;
 }
+label span {font-weight: 300;}
 .low-opacity{opacity:0.2}
 .med-opacity{opacity:0.4}
 .high-opacity{opacity:0.7}
