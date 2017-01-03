@@ -1,13 +1,13 @@
 $font1: 'Roboto';
 $font2: 'Roboto Condensed';
-$text-color: #eaf1f1;
-$darkest: #191c1c;
-$darker: #266364;
-$dark: #298788;
-$medium: #31afb1;
-$light: #25dcde;
+$text-color: #ffefee;
+$darkest: #0b0201;
+$darker: #491a18;
+$dark: #632420;
+$medium: #822f2b;
+$light: #af403a;
 $grey: #aaa;
-$text-bg: #222828;
+$text-bg: #1e0b0a;
 /*
 $text-color: #eee;
 $darkest: #111;
@@ -18,6 +18,11 @@ $light: #eee;
 $grey: #bbb;
 $text-bg: #333;
 */
+@font-face {
+    font-family: 'SFChaerilidae';
+    src: url('../fonts/SFChaerilidae.ttf') format('truetype');
+}
+
 body {
   background: $darkest;
   color:$text-color;
@@ -26,6 +31,18 @@ body {
   font-family: $font1;
   font-size: 16px;
   width: 100%;
+}
+
+.titlebar {
+    background: #0e0e0e;
+    padding: 10px 0px;
+    padding-left: 5%;
+    position: fixed;
+    width: 100%;
+    z-index: 2;
+    font: 24px 'SFChaerilidae';
+    color: #eee;
+    a:hover {text-decoration: none;}
 }
 
 a, a:visited {color: $grey; text-decoration: none;}
@@ -198,6 +215,7 @@ div {
     background-position: center;
     background-size: cover;
     margin-bottom: 100px;
+    padding-bottom:30px;
 }
 
 .button-container {
@@ -211,7 +229,7 @@ div {
   margin-top: 20px;
   circle {fill:#e18a24;}
   .state {
-    fill: $text-color;
+    fill: #fff;
     stroke: #232323;
     stroke-width: 0.25;
     stroke-linejoin: round;

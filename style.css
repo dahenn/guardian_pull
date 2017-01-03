@@ -8,14 +8,29 @@ $light: #eee;
 $grey: #bbb;
 $text-bg: #333;
 */
+@font-face {
+  font-family: 'SFChaerilidae';
+  src: url("../fonts/SFChaerilidae.ttf") format("truetype"); }
 body {
-  background: #191c1c;
-  color: #eaf1f1;
+  background: #0b0201;
+  color: #ffefee;
   text-align: justify;
   line-height: 1.5em;
   font-family: "Roboto";
   font-size: 16px;
   width: 100%; }
+
+.titlebar {
+  background: #0e0e0e;
+  padding: 10px 0px;
+  padding-left: 5%;
+  position: fixed;
+  width: 100%;
+  z-index: 2;
+  font: 24px 'SFChaerilidae';
+  color: #eee; }
+  .titlebar a:hover {
+    text-decoration: none; }
 
 a, a:visited {
   color: #aaa;
@@ -27,7 +42,7 @@ a:hover {
 
 h1,
 h2 {
-  color: #31afb1;
+  color: #822f2b;
   font: "Roboto Condensed" 2.5em;
   font-weight: 300; }
 
@@ -45,7 +60,7 @@ div {
       font-weight: 500;
       letter-spacing: 1px;
       margin-top: 0px;
-      color: #eaf1f1; }
+      color: #ffefee; }
     div .header .header-left h2.top {
       font-size: 2em;
       letter-spacing: 1px;
@@ -65,15 +80,15 @@ div {
         margin-top: -5px; }
       div .header .header-right a {
         font-weight: 500;
-        color: #25dcde;
+        color: #af403a;
         text-decoration: none; }
   div .btn-primary {
-    background-color: #222828;
-    border-color: #222828;
+    background-color: #1e0b0a;
+    border-color: #1e0b0a;
     min-width: 60px; }
   div .btn-primary.active, div .btn-primary.active:hover, div .btn-primary.active.focus, div .btn-primary:hover, div .btn-primary:active, div .btn-primary:focus, div .btn-primary:active:hover {
-    background-color: #266364;
-    border-color: #222828; }
+    background-color: #491a18;
+    border-color: #1e0b0a; }
   div .title {
     text-align: left; }
   div .text {
@@ -83,7 +98,7 @@ div {
   div .full-width {
     margin-bottom: 30px; }
     div .full-width h3 {
-      color: #31afb1; }
+      color: #822f2b; }
   div .key {
     margin-bottom: 50px; }
     div .key .key1 {
@@ -97,7 +112,7 @@ div {
   div .data-info {
     margin-bottom: 50px; }
     div .data-info span.emphasis {
-      color: #31afb1;
+      color: #822f2b;
       font-family: "Roboto Condensed";
       font-weight: 400;
       font-size: 1.2em; }
@@ -110,7 +125,7 @@ div {
       font-weight: 300;
       line-height: 1.5em; }
     div .insight h3 span.emphasis {
-      color: #31afb1;
+      color: #822f2b;
       font-weight: 600; }
   div .stats {
     display: inline-block;
@@ -128,7 +143,7 @@ div {
 .divider {
   margin-bottom: 40px;
   width: 100%;
-  background: #266364;
+  background: #491a18;
   padding: 30px 0;
   font-style: italic;
   margin-top: 60px;
@@ -137,14 +152,14 @@ div {
     text-align: center;
     margin: 0px; }
   .divider .left h2 {
-    color: #eaf1f1;
+    color: #ffefee;
     font-family: "Roboto Condensed";
     font-weight: 700;
     font-size: 4em;
     width: 100%;
     margin-bottom: 10px; }
   .divider .right h2 {
-    color: #eaf1f1;
+    color: #ffefee;
     font-weight: 300;
     margin-bottom: 0px;
     line-height: 40px;
@@ -154,7 +169,7 @@ div {
   text-align: center;
   padding: 20px;
   border-radius: 4px;
-  background: #222828; }
+  background: #1e0b0a; }
   .feedback h3 {
     margin: 0px; }
 
@@ -172,20 +187,21 @@ div {
   background: url("img/bg.png");
   background-position: center;
   background-size: cover;
-  margin-bottom: 100px; }
+  margin-bottom: 100px;
+  padding-bottom: 30px; }
 
 .button-container {
   width: 30%; }
 
 .map svg {
   width: 100%;
-  background: #222828;
+  background: #1e0b0a;
   margin-bottom: 10px;
   margin-top: 20px; }
   .map svg circle {
     fill: #e18a24; }
   .map svg .state {
-    fill: #eaf1f1;
+    fill: #fff;
     stroke: #232323;
     stroke-width: 0.25;
     stroke-linejoin: round;
@@ -252,7 +268,7 @@ label span {
   display: none; }
 
 text {
-  fill: #eaf1f1;
+  fill: #ffefee;
   font-weight: 400; }
 
 g.Black {

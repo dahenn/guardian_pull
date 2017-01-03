@@ -41,7 +41,7 @@ d3.csv("chart1.csv", function(error, data) {
   data.sort(function(a, b) { return b.total - a.total; });
 
   x.domain(data.map(function(d) { return d.race; }));
-  y.domain([0, 12]);
+  y.domain([0, 15]);
 
   chartsvg.append("g")
       .attr("class", "x axis")
@@ -179,7 +179,7 @@ var slidermargin = {top: 20, right: 50, bottom: 20, left: 50},
 
 
 var sliderx = d3.scale.linear()
-    .domain([1,611])
+    .domain([1,688])
     .range([0, sliderwidth])
     .clamp(true);
 
@@ -263,7 +263,7 @@ function sleep(milliseconds) {
 function nextDate() {
   var current = brush.extent()[0];
   var next = current + 1;
-  if (current >= 611) { next = 1;}
+  if (current >= 688) { next = 1;}
   brush.extent([next,next]);
   handle.attr("cx", sliderx(brush.extent()[0]));
   d3.selectAll('circle.date' + next.toFixed(0))
@@ -405,8 +405,8 @@ function type(d) {
 
 /******************* PIE 2 *******************/
 
-var pie2width = 225,
-    pie2height = 225,
+var pie2width = 275,
+    pie2height = 275,
     pie2radius = Math.min(pie2width, pie2height) / 2;
 
 var pie2color = d3.scale.ordinal()
@@ -466,8 +466,8 @@ function type(d) {
 
 /******************* PIE 3 *******************/
 
-var pie3width = 225,
-    pie3height = 225,
+var pie3width = 275,
+    pie3height = 275,
     pie3radius = Math.min(pie3width, pie3height) / 2;
 
 var pie3color = d3.scale.ordinal()

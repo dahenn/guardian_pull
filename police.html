@@ -33,19 +33,34 @@
     </script>
 </head>
 <body>
-    <div class="container-fluid header-bg">
+    <div class="container-fluid titlebar" style="margin-top:-46px;">
+        <a href="/">danneh.data</a>
+    </div>
+    <div class="container-fluid header-bg" style="margin-top:46px;">
         <div class = 'container'>
             <div class = 'header'>
                 <div class = 'header-left col-lg-8 col-md-8 col-sm-12 col-xs-12'>
                     <h1 class='top'>POLICE KILLINGS</h1>
-                    <h2 class='top' style="display: inline; float:left;">IN THE </h1>
-                    <h1 class='top' style="display: inline; float:left;">UNITED STATES</h1>
+                    <h2 class='top' style="display: inline; float:left;">IN THE </h2>
+                    <h1 class='top' style="display: inline; float:left;">UNITED STATES </h1>
                 </div>
                 <div class = 'header-right col-lg-4 col-md-4 col-sm-12 col-xs-12'>
                     <h2>DATA VISUALIZATION</h2>
                     <h3>by <a href='https://twitter.com/DannyHenn'>DANNY HENN</a></h3>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="data-info container">
+        <div class="title col-lg-3 col-sm-12">
+            <h2>How many people have been killed by the police in 2015 &amp; 2016?</h2>
+        </div>
+        <div class='text col-lg-9 col-sm-12'>
+          <p>A matter of great public concern over the past few years has been the incidence of police violence in the United States. This has led to the rise of Black Lives Matter
+          and significant new reporting on the subject.</p>
+          <p>Data on this subject is notoriously bad. However, some independent reporting efforts from major news outlets have created impressive databases in the last few years.</p>
+          <p>The map below shows every death by police in 2015 and 2016. Each dot represents one death, and is color coded based on race, and darker or lighter depending on whether the victim was
+              armed or unarmed.</p>
         </div>
     </div>
     <div class="container">
@@ -85,9 +100,7 @@
             <div class='text col-lg-9 col-sm-12'>
               <p>The data used in this visualization is from The Guardian's project entitled <a href="http://www.theguardian.com/us-news/ng-interactive/2015/jun/01/the-counted-police-killings-us-database" target="_blank">"The Counted"</a>.
                 It is an ongoing project that tracks deaths resulting from police violence in the US. Their project does a very good job of statistics on a state-wide basis, as well as some interesting statistics based on race.
-                I thought an interesting expansion of this would be to bring in the armed/unarmed element. Many police shootings are what may be called "suicide by police", which doesn't necessarily reflect any malfeasance or
-                irresponsibility on the part of the police.</p>
-              <p>Therefore, the interaction between race and whether the victim was armed seems important to analyze, as police misconduct is clearest when the victim was unarmed.</p>
+                I thought a useful expansion of this would be to bring in the armed/unarmed element. Therefore, the interaction between race and whether the victim was armed seems important to analyze, as police misconduct is clearest when the victim was unarmed.</p>
             </div>
         </div>
     </div>
@@ -101,32 +114,32 @@
         </div>
     </div>
     <div class = 'container'>
-        <div class='stats col-lg-3 col-sm-6 col-xs-12' id='pie1'>
+        <div class='stats col-sm-6 col-xs-12' id='pie1'>
           <h3 style="font-weight:bold;">Total Killed: <span class="killed"></span></h3>
           <h4><span style="font-weight:bold;" class='totals' id="White"></span> were <span style="font-weight:bold;">White</span></h4>
           <h4><span style="font-weight:bold;" class='totals' id="Black"></span> were <span style="font-weight:bold;">Black</span></h4>
           <h4><span style="font-weight:bold;" class='totals' id="Other"></span> were of <span style="font-weight:bold;">Another Race</span></h4>
         </div>
-        <div class='stats col-lg-3 col-sm-6 col-xs-12' id='pie2'>
+        <div class='stats col-sm-6 col-xs-12' id='pie2'>
           <h3><span style="font-weight:bold;" class="unarmed-total"></span> were <span style="font-weight:bold;">Unarmed</span></h3>
           <h4><span style="font-weight:bold;" class='unarmed' id="White"></span> were <span style="font-weight:bold;">White</span></h4>
           <h4><span style="font-weight:bold;" class='unarmed' id="Black"></span> were <span style="font-weight:bold;">Black</span></h4>
           <h4><span style="font-weight:bold;" class='unarmed' id="Other"></span> were of <span style="font-weight:bold;">Another Race</span></h4>
         </div>
-        <div class='stats col-lg-3 col-sm-6 col-xs-12' id='pie3'>
+        <div class='stats col-sm-6 col-xs-12' id='pie3'>
           <h3><span style="font-weight:bold;" class="armed-total"></span> had a <span style="font-weight:bold;">Firearm</span></h3>
           <h4><span style="font-weight:bold;" class='armed' id="White"></span> were <span style="font-weight:bold;">White</span></h4>
           <h4><span style="font-weight:bold;" class='armed' id="Black"></span> were <span style="font-weight:bold;">Black</span></h4>
           <h4><span style="font-weight:bold;" class='armed' id="Other"></span> were of <span style="font-weight:bold;">Another Race</span></h4>
         </div>
-        <div class='stats col-lg-3 col-sm-6 col-xs-12' id='pie4'>
+        <div class='stats col-sm-6 col-xs-12' id='pie4'>
           <h3><span style="font-weight:bold;">US Demographics</span> show...</h3>
           <h4><span style="font-weight:bold;" class='demo' id="White"></span> are <span style="font-weight:bold;">White</span></h4>
           <h4><span style="font-weight:bold;" class='demo' id="Black"></span> are <span style="font-weight:bold;">Black</span></h4>
           <h4><span style="font-weight:bold;" class='demo' id="Other"></span> are of <span style="font-weight:bold;">Another Race</span></h4>
         </div>
         <div class='insight'>
-            <h3>The data shows that about <span class='emphasis'>65% of the US population is white</span>, while only about <span class='emphasis'>50% of those killed by police were white.</span></h3>
+            <h3>The data shows that about <span class='emphasis'>65% of the US population is white</span>, while <span class='emphasis'>less than 50% of those killed by police were white.</span></h3>
             <h3>On the other hand, only about <span class='emphasis'>12.5% of the US population is black</span>, but about <span class='emphasis'>25% of those killed by police.</span></h3>
         </div>
     </div>
@@ -148,6 +161,54 @@
             explained away by other factors.</p>
         </div>
     </div>
+    <div class="divider container-fluid">
+        <div class='left col-lg-5 col-sm-12'>
+            <h2>[FINDING #3]</h2>
+        </div>
+        <div class='right col-lg-5 col-sm-12'>
+            <h2>The United States is an <span style='font-weight:600'>extreme outlier</span> in the number of people killed by police
+            <span style='font-weight:600'>compared to other developed countries</span>.</h2>
+        </div>
+    </div>
+    <div class="data-info container">
+        <div class="title col-lg-3 col-sm-12">
+            <h2>How much worse is police violence in the US?</h2>
+        </div>
+        <div class='text col-lg-9 col-sm-12'>
+          <p>In short, much, much worse. American cops kill many times more people on a per person basis than any Western European country, even when taking into account the degree of gun ownership and
+          racist tendencies within police deaths. According to research by <a href="http://theconversation.com/why-do-american-cops-kill-so-many-compared-to-european-cops-49696" target="_blank">Rutgers University Professor Paul Hirschfield</a>
+            and <a href="https://www.theguardian.com/us-news/2015/jun/09/the-counted-police-killings-us-vs-other-countries" target="_blank">further research by The Guardian</a>:</p>
+            <ul>
+                <li>American police fatally shoot 3.42 people per million residents per year in the US. This is <b>18 times greater</b> than the highest rate in Western Europe, which is Denmark at 0.187 people per million annually.</li>
+                <li>England &amp; Wales have had <b>55</b> fatal police shootings in the last 24 years, while there were <b>59</b> fatal police shootings in the first 24 days of 2015.</li>
+                <li>Germany saw <b>15</b> citizens of any race, armed or unarmed, fatally shot in a two year period, while <b>19</b> unarmed black men were killed in the US in the first five months of 2015.</li>
+                <li>Canada averages <b>25</b> fatal police shootings a year, while California (similar population to Canada) had <b>72</b> fatal police shootings in 2015.</li>
+            </ul>
+        </div>
+        <div class="title col-lg-3 col-sm-12">
+            <h2>Where do we go from here?</h2>
+        </div>
+        <div class='text col-lg-9 col-sm-12'>
+          <p>You may have asked yourself 'Why is this data coming from a British newspaper than the American government?' while reading through this. This is a very valid concern that has become a significant conversation in recent months.
+              FBI director James Comey has said it is <a href="https://www.washingtonpost.com/national/fbi-director-calls-lack-of-data-on-police-shootings-ridiculous-embarrassing/2015/10/07/c0ebaf7a-6d16-11e5-b31c-d80d62b53e28_story.html?utm_term=.45751808e195" target="_blank">
+            "ridiculous" and "embarrrassing"</a> that news publications such as the Guardian and the <a href="https://www.washingtonpost.com/graphics/national/police-shootings-2016/" target="_blank">
+            Washington Post</a> have more comprehensive data about fatal police encounters than the Federal government does.</p>
+            <p>While there have been <a href="https://fivethirtyeight.com/features/ferguson-michael-brown-measuring-police-killings/" target="_blank">efforts</a>
+                to comprehensively track this sort of data, it still largely remains a mess. However, the <a href="https://fivethirtyeight.com/features/the-government-finally-has-a-realistic-estimate-of-killings-by-police/" target="_blank">Bureau of Justice Statistics</a>
+                has recently released a more comprehensive report, and the Justice Department recently <a href="http://fivethirtyeight.com/features/will-trump-enforce-the-tough-new-rules-on-reporting-police-killings/?ex_cid=538twitter" target="_blank">announced new rules</a>
+                that require departments to produce quarterly reports detailing deaths in custody or during police encounters. Failure to comply with these rules would mean a reduction in federal funding.</p>
+            <p>Despite this good news, the bad news is that this reporting may be threatened by a Trump presidency. It will be up to a Department of Justice most likely led by Jeff Sessions to actually enforce these new rules. This will be an important area to keep an eye on,
+                and is a very important step in increasing police accountability and hopefully reducing police violence.</p>
+        </div>
+    </div>
+    <div class="container">
+        <div class="feedback col-sm-offset-2 col-sm-8 col-xs-12">
+            <h3>Questions? Comments? Criticism? Find me <a href="https://twitter.com/DannyHenn" target="_blank">@DannyHenn</a></h3>
+            <br />
+            <h4><a href="https://github.com/dahenn/guardian_pull" target="_blank">Find the code for this project</a></h4>
+        </div>
+    </div>
+    <br />
     <script src='charts.js'></script>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
